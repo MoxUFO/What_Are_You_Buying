@@ -52,7 +52,14 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-
+  try {
+    const locationData = await Category.create({
+      reader_id: req.body.reader_id,
+    });
+    res.status(200).json(locationData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
   // create a new category
 });
 
