@@ -37,16 +37,29 @@ router.get('/:id',async (req, res) => {
   // be sure to include its associated Product data
 });
 
-router.post('/',async (req, res) => {
-  try {
-    console.log("Ayo getting categories")
-    const tagData = await Tag.create({
-      tag_name: req.body.tag_name
+router.post('/', (req, res) => {
+  Tag.create({
+      tag_name: req.body.tag_name,
+      productIds: req.body.productIds
     })
-    res.json(tagData)
-  } catch (error) {
-    console.log(error)
-  }
+      .then((tag) => {
+        if (req.body.productIds.length) {
+          const tagProductIdArr = req.body.productIds.map((product_id) => {
+            return{
+              tag_id: tag.id,
+              product_id,
+            }
+          })
+          return ProductTag.bulkCreate(tagProductIdArr)
+        }
+        res.status(200).json(tag);
+      })
+      .then((productTagIds) => res.status(200).json(productTagIds))
+      .catch((err) => {
+        console.log(err);
+        res.status(400).json(err)
+      })
+
 });
 
 router.put('/:id', (req, res) => {
@@ -61,9 +74,10 @@ router.put('/:id', (req, res) => {
         }
       }
     ) 
-    .then((updatedTag)=>{
-      res.json(updatedTag)
+    .then((tag)=>{
+      res.json(tag)
     })
+    
   } catch (error) {
     res.status(400).json(error)
   }
