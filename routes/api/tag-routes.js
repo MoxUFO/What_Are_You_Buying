@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Tag, Product, ProductTag } = require('../../models');
 
-// The `/api/tags` endpoint
+
 
 router.get('/',async (req, res) => {
   try {
@@ -16,7 +16,7 @@ router.get('/',async (req, res) => {
   } catch (error) {
     console.log(error)
   }
-  // be sure to include its associated Product data
+
 });
 
 router.get('/:id',async (req, res) => {
@@ -37,28 +37,17 @@ router.get('/:id',async (req, res) => {
   // be sure to include its associated Product data
 });
 
-router.post('/', (req, res) => {
-  Tag.create({
+router.post('/',async (req, res) => {
+  console.log(res);
+
+  try {
+    const tagData = await Tag.create({
       tag_name: req.body.tag_name,
-      productIds: req.body.productIds
-    })
-      .then((tag) => {
-        if (req.body.productIds.length) {
-          const tagProductIdArr = req.body.productIds.map((product_id) => {
-            return{
-              tag_id: tag.id,
-              product_id,
-            }
-          })
-          return ProductTag.bulkCreate(tagProductIdArr)
-        }
-        res.status(200).json(tag);
-      })
-      .then((productTagIds) => res.status(200).json(productTagIds))
-      .catch((err) => {
-        console.log(err);
-        res.status(400).json(err)
-      })
+    });
+    res.status(200).json(tagData);
+  } catch (err) {
+    res.status(400).json(err);
+  }
 
 });
 
@@ -66,21 +55,21 @@ router.put('/:id', (req, res) => {
   try {
     Tag.update(
       {
-        tag_name:req.body.tag_name
+        tag_name: req.body.tag_name
       },
       {
         where:{
-          id:req.params.id
+          id: req.params.id
         }
       }
-    ) 
-    .then((tag)=>{
-      res.json(tag)
+    )
+    .then((updatedtag)=>{
+      res.json(updatedtag)
     })
-    
   } catch (error) {
     res.status(400).json(error)
   }
+                                     
 });
 
 router.delete('/:id',async (req, res) => {
