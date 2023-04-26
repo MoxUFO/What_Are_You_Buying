@@ -3,7 +3,9 @@
 
 ## Description
 
-des
+what the CRUD! This app demonstrates a simple easy to use API for a shopping store. User can see 
+detailed information regarding items in the store, what types of items user have in the the store,
+and tags to mark said items. 
 
 ## Table of Content
 
@@ -27,10 +29,10 @@ npm install
 
 ## Usage
 
-what the CRUD! This app demonstrates a simple easy to use API for a shopping store. User can see 
-detailed information regarding items in the store, what types of items user have in the the store,
-and tags to mark said items. 
-
+To use this app user must, cloned the repo and use the npm i command from the server.js file in the repo. 
+User cand then use the schema and seeds to populate the database with the starting information from the
+ecommerce database. User needs to use insomnia or other restful api program. User can now make POST, GET,  
+PUT and DELETE request from said platform to view information from the database.
 
 Picture of thelist of route i have in Insomia:
 
@@ -58,5 +60,5 @@ If you have any question about the repo, openan issue or contact me at [MoxUFO] 
 
 link to video submission.
 
-
+https://drive.google.com/file/d/11pYIFmlQBVY2vrObWCZrbXfZrBaERsFP/view
 
